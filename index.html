@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aquaculture Monitoring</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Aquaculture Monitoring Dashboard</h1>
+
+  <div class="dashboard">
+    <div class="card">
+      <h2>TDS</h2>
+      <canvas id="tdsGauge"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Turbidity</h2>
+      <canvas id="turbidityGauge"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Temperature</h2>
+      <canvas id="temperatureGauge"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Voltage</h2>
+      <canvas id="voltageGauge"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Diesel Level</h2>
+      <progress id="dieselLevel" value="70" max="100"></progress>
+      <span id="dieselText">70%</span>
+    </div>
+
+    <div class="card">
+      <h2>Grid Status</h2>
+      <span id="gridStatus" class="status off">OFF</span>
+    </div>
+
+    <div class="card">
+      <h2>Generator Status</h2>
+      <span id="generatorStatus" class="status on">ON</span>
+    </div>
+
+    <div class="card">
+      <h2>Motor Control</h2>
+      <label class="switch">
+        <input type="checkbox" id="motorToggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

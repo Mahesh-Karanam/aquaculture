@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Aquaculture Monitoring</title>
+  <title>Aquaculture Monitoring Dashboard</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -31,30 +31,32 @@
 
     <div class="card">
       <h2>Diesel Level</h2>
-      <progress id="dieselLevel" value="70" max="100"></progress>
-      <span id="dieselText">70%</span>
+      <progress id="dieselLevel" value="0" max="100"></progress>
+      <span id="dieselText">0%</span>
     </div>
 
     <div class="card">
       <h2>Grid Status</h2>
-      <span id="gridStatus" class="status off">OFF</span>
+      <span id="gridStatus" class="status off">--</span>
     </div>
 
     <div class="card">
       <h2>Generator Status</h2>
-      <span id="generatorStatus" class="status on">ON</span>
+      <span id="generatorStatus" class="status off">--</span>
     </div>
 
     <div class="card">
       <h2>Motor Control</h2>
       <label class="switch">
-        <input type="checkbox" id="motorToggle">
+        <input type="checkbox" id="motorToggle" disabled>
         <span class="slider round"></span>
       </label>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

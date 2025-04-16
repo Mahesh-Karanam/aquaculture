@@ -1,81 +1,167 @@
-// Initialize Firebase
-firebase.initializeApp({
-  apiKey: "AIzaSyC9SYfsNkfGrfPFfRlCLSHXncwwZQJY--I",
-  authDomain: "aquaculture-5e8a4.firebaseapp.com",
-  databaseURL: "https://aquaculture-5e8a4-default-rtdb.firebaseio.com",
-  projectId: "aquaculture-5e8a4",
-  storageBucket: "aquaculture-5e8a4.firebasestorage.app",
-  messagingSenderId: "465167971896",
-  appId: "1:465167971896:web:53e1ec29b5acb56704d8cd"
-});
+const firebaseConfig = {
 
-const db = firebase.database();
+      apiKey: "AIzaSyDIbt5_7E7WFawzenvi88yXUDQmnwzUr7w",
 
-// Chart config helper
-function createGaugeChart(ctx, max) {
-  return new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      datasets: [{
-        data: [0, max],
-        backgroundColor: ['#00bcd4', '#e0e0e0'],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      rotation: -90,
-      circumference: 180,
-      cutout: '70%',
-      plugins: {
-        tooltip: { enabled: false },
-        legend: { display: false }
-      }
+      authDomain: "dummy-29891.firebaseapp.com",
+
+      databaseURL: "https://dummy-29891-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+      projectId: "dummy-29891",
+
+      storageBucket: "dummy-29891.appspot.com",
+
+      messagingSenderId: "858783429956",
+
+      appId: "1:858783429956:web:e52849ac5e66d075d15311"
+
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    const db = firebase.database();
+
+ 
+
+    function createGauge(id, max) {
+
+      return new Chart(document.getElementById(id), {
+
+        type: 'doughnut',
+
+        data: {
+
+          datasets: [{
+
+            data: [0, max],
+
+            backgroundColor: ['#00c0f0', '#e0e0e0'],
+
+            borderWidth: 0
+
+          }]
+
+        },
+
+        options: {
+
+          cutout: '70%',
+
+          plugins: {
+
+            legend: { display: false },
+
+            tooltip: { enabled: false }
+
+          }
+
+        }
+
+      });
+
     }
-  });
-}
 
-// Initialize charts
-const tdsChart = createGaugeChart(document.getElementById("tdsGauge"), 1000);
-const turbidityChart = createGaugeChart(document.getElementById("turbidityGauge"), 100);
-const temperatureChart = createGaugeChart(document.getElementById("temperatureGauge"), 50);
-const voltageChart = createGaugeChart(document.getElementById("voltageGauge"), 240);
+ 
 
-// Update chart values
-function updateGauge(chart, value, max) {
-  const clamped = Math.min(value, max);
-  chart.data.datasets[0].data = [clamped, max - clamped];
-  chart.update();
-}
+    const turbGauge = createGauge("turbGauge", 100);
 
-// Update diesel
-function updateDiesel(value) {
-  const progress = document.getElementById("dieselLevel");
-  const text = document.getElementById("dieselText");
-  const percent = Math.min(value, 100);
-  progress.value = percent;
-  text.textContent = percent + "%";
-}
+    const tempGauge = createGauge("tempGauge", 50);
 
-// Update status
-function updateStatus(id, value) {
-  const el = document.getElementById(id);
-  const isOn = value === true || value === 1 || String(value).toLowerCase() === "on";
-  el.textContent = isOn ? "ON" : "OFF";
-  el.className = "status " + (isOn ? "on" : "off");
-}
+    const voltGauge = createGauge("voltGauge", 300);
 
-// Update motor toggle
-function updateMotor(value) {
-  const toggle = document.getElementById("motorToggle");
-  toggle.checked = value === true || value === 1 || String(value).toLowerCase() === "on";
-}
+ 
 
-// Firebase listeners
-db.ref("tds").on("value", snapshot => updateGauge(tdsChart, snapshot.val(), 1000));
-db.ref("turbidity").on("value", snapshot => updateGauge(turbidityChart, snapshot.val(), 100));
-db.ref("temperature").on("value", snapshot => updateGauge(temperatureChart, snapshot.val(), 50));
-db.ref("voltage").on("value", snapshot => updateGauge(voltageChart, snapshot.val(), 240));
-db.ref("diesel_level").on("value", snapshot => updateDiesel(snapshot.val()));
-db.ref("grid_status").on("value", snapshot => updateStatus("gridStatus", snapshot.val()));
-db.ref("generator_status").on("value", snapshot => updateStatus("generatorStatus", snapshot.val()));
-db.ref("motor_control").on("value", snapshot => updateMotor(snapshot.val()));
+    db.ref("sensor/turbidity").on("value", snap => {
+
+      let v = snap.val() || 0;
+
+      turbGauge.data.datasets[0].data = [v, 100 - v];
+
+      turbGauge.update();
+
+      document.getElementById("turbVal").textContent = `${v}`;
+
+    });
+
+ 
+
+    db.ref("sensor/temperature").on("value", snap => {
+
+      let v = snap.val() || 0;
+
+      tempGauge.data.datasets[0].data = [v, 50 - v];
+
+      tempGauge.update();
+
+      document.getElementById("tempVal").textContent = `${v}°C`;
+
+    });
+
+ 
+
+    db.ref("sensor/voltage").on("value", snap => {
+
+      let v = snap.val() || 0;
+
+      voltGauge.data.datasets[0].data = [v, 300 - v];
+
+      voltGauge.update();
+
+      document.getElementById("voltVal").textContent = `${v}V`;
+
+    });
+
+ 
+
+    db.ref("sensor/diesel").on("value", snap => {
+
+      let v = snap.val() || 0;
+
+      document.getElementById("dieselBar").style.width = v + "%";
+
+      document.getElementById("dieselText").textContent = `${v}%`;
+
+    });
+
+ 
+
+    db.ref("control/grid_status").on("value", snap => {
+
+      let on = snap.val();
+
+      let el = document.getElementById("gridStatus");
+
+      el.textContent = on ? "ON" : "OFF";
+
+      el.className = "status " + (on ? "on" : "off");
+
+    });
+
+ 
+
+    db.ref("control/generator_status").on("value", snap => {
+
+      let on = snap.val();
+
+      let el = document.getElementById("genStatus");
+
+      el.textContent = on ? "ON" : "OFF";
+
+      el.className = "status " + (on ? "on" : "off");
+
+    });
+
+ 
+
+    const motorToggle = document.getElementById("motorToggle");
+
+    db.ref("control/relay").on("value", snap => {
+
+      motorToggle.checked = snap.val() || false;
+
+    });
+
+    motorToggle.addEventListener("change", () => {
+
+      db.ref("control/relay").set(motorToggle.checked);
+
+    });

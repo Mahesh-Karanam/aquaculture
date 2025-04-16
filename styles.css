@@ -1,135 +1,179 @@
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-}
 
-/* Page Title */
-h1 {
-  margin-bottom: 2rem;
-  font-size: 2rem;
-}
+      background: #f0f6fb;
 
-/* Dashboard Layout */
-.dashboard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  max-width: 1200px;
-  width: 100%;
-}
+      font-family: Arial, sans-serif;
 
-/* Card Styling */
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  width: 220px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
+      text-align: center;
 
-/* Chart Canvas */
-canvas {
-  width: 100px !important;
-  height: 100px !important;
-  margin: auto;
-}
+      padding: 20px;
 
-/* Diesel Level */
-progress {
-  width: 100%;
-  height: 15px;
-  margin-top: 10px;
-  border-radius: 10px;
-}
+    }
 
-progress::-webkit-progress-bar {
-  background-color: #eee;
-  border-radius: 10px;
-}
+    h1 {
 
-progress::-webkit-progress-value {
-  background-color: #007bff;
-  border-radius: 10px;
-}
+      margin-bottom: 30px;
 
-#dieselText {
-  display: block;
-  margin-top: 5px;
-  font-weight: bold;
-}
+    }
 
-/* Status Indicators */
-.status {
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: white;
-  font-weight: bold;
-  display: inline-block;
-}
+    .card-grid {
 
-.status.on {
-  background-color: #28a745;
-}
+      display: grid;
 
-.status.off {
-  background-color: #dc3545;
-}
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 
-/* Toggle Switch */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-}
+      gap: 20px;
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+      margin: auto;
 
-.slider {
-  position: absolute;
-  cursor: not-allowed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  border-radius: 24px;
-  transition: 0.4s;
-}
+      max-width: 1000px;
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.4s;
-}
+    }
 
-input:checked + .slider {
-  background-color: #28a745;
-}
+    .card {
 
-input:checked + .slider:before {
-  transform: translateX(26px);
-}
+      background: white;
+
+      padding: 20px;
+
+      border-radius: 15px;
+
+      box-shadow: 0 0 10px #ccc;
+
+    }
+
+    canvas {
+
+      height: 160px !important;
+
+    }
+
+    .gauge-value {
+
+      font-size: 18px;
+
+      font-weight: bold;
+
+      margin-top: 10px;
+
+    }
+
+    .status {
+
+      padding: 10px;
+
+      border-radius: 10px;
+
+      font-weight: bold;
+
+      color: white;
+
+    }
+
+    .on {
+
+      background-color: green;
+
+    }
+
+    .off {
+
+      background-color: red;
+
+    }
+
+    .diesel-bar {
+
+      width: 100%;
+
+      height: 15px;
+
+      background: #ddd;
+
+      border-radius: 10px;
+
+      margin: 10px 0;
+
+      position: relative;
+
+    }
+
+    .diesel-fill {
+
+      height: 100%;
+
+      background: #007bff;
+
+      border-radius: 10px;
+
+    }
+
+    .switch {
+
+      position: relative;
+
+      display: inline-block;
+
+      width: 60px;
+
+      height: 30px;
+
+    }
+
+    .switch input {
+
+      opacity: 0;
+
+      width: 0;
+
+      height: 0;
+
+    }
+
+    .slider {
+
+      position: absolute;
+
+      cursor: pointer;
+
+      top: 0; left: 0;
+
+      right: 0; bottom: 0;
+
+      background-color: #ccc;
+
+      transition: 0.4s;
+
+      border-radius: 34px;
+
+    }
+
+    .slider:before {
+
+      position: absolute;
+
+      content: "";
+
+      height: 22px; width: 22px;
+
+      left: 4px; bottom: 4px;
+
+      background-color: white;
+
+      transition: 0.4s;
+
+      border-radius: 50%;
+
+    }
+
+    input:checked + .slider {
+
+      background-color: #2196F3;
+
+    }
+
+    input:checked + .slider:before {
+
+      transform: translateX(26px);
+
+    }
